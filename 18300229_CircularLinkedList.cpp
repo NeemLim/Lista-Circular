@@ -18,14 +18,12 @@ class List	//Contains the activities of the list.
 		}
 	};
 
-	Node* beggining,
-		* last;
+	Node* beggining;
 
 public:
 	List()
 	{
 		beggining = nullptr;
-		last = nullptr;
 	}
 
 	void addItem(T data) //Adds an element to the list.
@@ -101,7 +99,7 @@ public:
 			{
 				elementCount++;
 				cursor = cursor->link;
-			} while (cursor->link != beggining);
+			} while (cursor != beggining);
 		}
 		return elementCount;
 	}
