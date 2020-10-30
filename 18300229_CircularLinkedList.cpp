@@ -35,7 +35,7 @@ public:
 		if (beggining == nullptr)
 		{
 			beggining = newNode;
-			beggining->link = beggining;
+			beggining->link = beggining;	//beggining points to itself.
 		}
 		else
 		{
@@ -43,10 +43,10 @@ public:
 			do
 			{
 				cursor = cursor->link;
-			} while (cursor->link != beggining);  //while next link is not empty.
+			} while (cursor->link != beggining);  //while first value is not found again
 
-			cursor->link = newNode;
-			newNode->link = beggining;
+			cursor->link = newNode;	//create new node on last element
+			newNode->link = beggining;	//point it back to the beggining
 		}
 	}
 	T getValue(T index)	//
@@ -157,12 +157,12 @@ public:
 	{
 		Node* erase;
 
-		while (beggining) //Deletes from first to last while link not null.
+		do
 		{
 			erase = beggining;
 			beggining = beggining->link;
 			delete erase;
-		}
+		} while (erase != beggining);	//If first value found again
 	}
 
 	bool checkEmpty() //Checks if count is 0.
