@@ -48,7 +48,7 @@ public:
 			} while (cursor->link != beggining);  //while next link is not empty.
 
 			cursor->link = newNode;
-			newNode->link = cursor->link;
+			newNode->link = beggining;
 		}
 	}
 	T getValue(T index)	//
@@ -95,10 +95,13 @@ public:
 	{
 		int elementCount = 0;
 		Node* cursor = beggining;
-		while (cursor)
+		if (beggining)
 		{
-			elementCount++;
-			cursor = cursor->link;
+			do
+			{
+				elementCount++;
+				cursor = cursor->link;
+			} while (cursor->link != beggining);
 		}
 		return elementCount;
 	}
