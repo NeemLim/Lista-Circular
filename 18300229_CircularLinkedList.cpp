@@ -18,12 +18,12 @@ class List	//Contains the activities of the list.
 		}
 	};
 
-	Node* beggining;
+	Node* beginning;
 
 public:
 	List()
 	{
-		beggining = nullptr;
+		beginning = nullptr;
 	}
 
 	void addItem(T data) //Adds an element to the list.
@@ -32,33 +32,33 @@ public:
 		newNode = new Node();
 		newNode->data = data;
 
-		if (beggining == nullptr)
+		if (beginning == nullptr)
 		{
-			beggining = newNode;
-			beggining->link = beggining;	//beggining points to itself.
+			beginning = newNode;
+			beginning->link = beginning;	//beginning points to itself.
 		}
 		else
 		{
-			cursor = beggining;
+			cursor = beginning;
 			do
 			{
 				cursor = cursor->link;
-			} while (cursor->link != beggining);  //while first value is not found again
+			} while (cursor->link != beginning);  //while first value is not found again
 
 			cursor->link = newNode;	//create new node on last element
-			newNode->link = beggining;	//point it back to the beggining
+			newNode->link = beginning;	//point it back to the beginning
 		}
 	}
-	T getValue(T index)	//
+	T getValue(T index)	//Returns data in node.
 	{
 		if (count() > index)
 		{
-			Node* cursor = beggining;
+			Node* cursor = beginning;
 			for (int i = 0; i < index; i++)
 				cursor = cursor->link;
 			return cursor->data;
 		}
-		return beggining->data;
+		return beginning->data;
 	}
 
 	int getPosition(T searchValue) //Returns the position where data was found.
@@ -73,7 +73,7 @@ public:
 
 	//void showData()			Shows all element's value and positions		//Not adecuate
 	//{
-	//	Node* cursor = beggining;
+	//	Node* cursor = beginning;
 	//	for (int i = 0; i < count(); i = i + 3)
 	//	{
 	//		for (int j = 0; j < 3; j++)
@@ -92,14 +92,14 @@ public:
 	int count() //Counts the elements in the list.
 	{
 		int elementCount = 0;
-		Node* cursor = beggining;
-		if (beggining)
+		Node* cursor = beginning;
+		if (beginning != NULL)
 		{
 			do
 			{
 				elementCount++;
 				cursor = cursor->link;
-			} while (cursor != beggining);
+			} while (cursor != beginning);
 		}
 		return elementCount;
 	}
@@ -111,7 +111,7 @@ public:
 		if (valuePos > -1) //If valuePos exists in the list.
 		{
 			int valueToReplace;
-			Node* cursor = beggining;
+			Node* cursor = beginning;
 			cout << "Input the updated value: "; cin >> valueToReplace;
 			for (int i = 0; i < valuePos; i++)
 				cursor = cursor->link;
@@ -129,13 +129,22 @@ public:
 
 		if (dataPos > -1) //If element was found, execute erase function.
 		{
-			Node* erase = beggining,
+			Node* erase = beginning,
 				* prevElement = nullptr;
 
 			if (dataPos == 0) //If first element is deleted.
 			{
-				beggining = beggining->link;
-				delete erase;
+				if (count() == 1)
+					beginning = nullptr;
+				else
+				{
+					prevElement = beginning;
+					for (int i = 0; i < count() - 1; i++)
+						prevElement = prevElement->link;
+					beginning = beginning->link;
+					prevElement->link = beginning;
+					delete erase;
+				}
 			}
 			else
 			{
@@ -155,14 +164,15 @@ public:
 
 	void deleteEverything() //Clears list.
 	{
-		Node* erase;
+		Node* erase,
+			* flagFirst = beginning;
 
 		do
 		{
-			erase = beggining;
-			beggining = beggining->link;
+			erase = beginning;
+			beginning = beginning->link;
 			delete erase;
-		} while (erase != beggining);	//If first value found again
+		} while (beginning->link);
 	}
 
 	bool checkEmpty() //Checks if count is 0.
