@@ -134,16 +134,16 @@ public:
 
 			if (dataPos == 0) //If first element is deleted.
 			{
-				if (count() == 1)
+				if (count() == 1)		//If its the only value, set to NULL.
 					beginning = nullptr;
 				else
 				{
-					prevElement = beginning;
+					prevElement = beginning;				//Save first item.
 					for (int i = 0; i < count() - 1; i++)
-						prevElement = prevElement->link;
-					beginning = beginning->link;
-					prevElement->link = beginning;
-					delete erase;
+						prevElement = prevElement->link;	//Gets last item.
+					beginning = beginning->link;			//Second item is now first
+					prevElement->link = beginning;			//Last item now points to second
+					delete erase;	//Delete beginning
 				}
 			}
 			else
@@ -153,7 +153,7 @@ public:
 					prevElement = erase;
 					erase = erase->link;
 				}
-				prevElement->link = erase->link;
+				prevElement->link = erase->link;	//Prev element points to element next to erase.
 				delete erase;
 			}
 			cout << "\n>Value found and deleted successfully." << endl;
