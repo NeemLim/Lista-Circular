@@ -93,13 +93,13 @@ public:
 	{
 		int elementCount = 0;
 		Node* cursor = beginning;
-		if (beginning != NULL)
+		if (beginning != NULL)		//Checks if list is empty.
 		{
 			do
 			{
 				elementCount++;
-				cursor = cursor->link;
-			} while (cursor != beginning);
+				cursor = cursor->link;	
+			} while (cursor != beginning);	//While link does not point back to first item.
 		}
 		return elementCount;
 	}
@@ -164,15 +164,16 @@ public:
 
 	void deleteEverything() //Clears list.
 	{
-		Node* erase,
-			* flagFirst = beginning;
+		Node* erase;
+		int	getCount = count();
 
-		do
+		for (int i = 0; i < getCount; i++)	//Deletes all elements using it's count.
 		{
 			erase = beginning;
 			beginning = beginning->link;
 			delete erase;
-		} while (beginning->link);
+		}
+		beginning = nullptr;	//confirms deletion by setting beginning as NULL;
 	}
 
 	bool checkEmpty() //Checks if count is 0.
