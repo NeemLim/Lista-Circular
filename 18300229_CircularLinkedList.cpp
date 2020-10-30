@@ -18,12 +18,14 @@ class List	//Contains the activities of the list.
 		}
 	};
 
-	Node* beggining;
+	Node* beggining,
+		* last;
 
 public:
 	List()
 	{
 		beggining = nullptr;
+		last = nullptr;
 	}
 
 	void addItem(T data) //Adds an element to the list.
@@ -33,13 +35,20 @@ public:
 		newNode->data = data;
 
 		if (beggining == nullptr)
+		{
 			beggining = newNode;
+			beggining->link = beggining;
+		}
 		else
 		{
 			cursor = beggining;
-			while (cursor->link) //while next link is not empty.
+			do
+			{
 				cursor = cursor->link;
+			} while (cursor->link != beggining);  //while next link is not empty.
+
 			cursor->link = newNode;
+			newNode->link = cursor->link;
 		}
 	}
 	T getValue(T index)	//
